@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { CheckCircle2, MapPin, Award, Users, Clock, Phone, Star } from 'lucide-react';
-import { storeSignImage } from './storeSignImage';
+// import { storeSignImage } from './storeSignImage';
+const storeSignImage = 'src/assets/storeimg.png';
 
 const highlights = [
   {

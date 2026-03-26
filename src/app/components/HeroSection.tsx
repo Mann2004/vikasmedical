@@ -2,7 +2,8 @@ import { motion } from 'motion/react';
 import { Phone, MessageCircle, Shield, Clock, Star, Award } from 'lucide-react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router';
-import heroImage from '../../assets/047191a18d4d3ee5eca8ea2b08e75a0bd489d450.png';
+
+const heroImage = 'dist/assets/heroimg.png';
 
 export function HeroSection() {
   const navigate = useNavigate();

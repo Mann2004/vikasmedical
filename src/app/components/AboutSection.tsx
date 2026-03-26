@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { CheckCircle2, MapPin, Award, Users, Clock, Phone, Star } from 'lucide-react';
-import storeSignImage from '../../assets/9aeef03831ca540572245c15ba8037065afe43bb.png';
+
+const storeSignImage = 'dist/assets/store-sign.png'; // Place image in public folder
 
 const highlights = [
   {
@@ -181,47 +182,57 @@ export function AboutSection() {
         </div>
 
         {/* Bottom Badge Row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-3xl border-2 border-[#2ECC71]/30 shadow-lg">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center shadow-lg">
-              <Award className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p
-                className="text-base text-[#1E8449]"
-                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
-              >
-                Licensed & Certified
-              </p>
-              <p className="text-sm text-[#2C3E50]/70" style={{ fontFamily: 'Inter, sans-serif' }}>
-                Approved by health authorities
-              </p>
-            </div>
-          </div>
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ delay: 0.8, duration: 0.6 }}
+  className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+>
+  {/* Badge 1 */}
+  <div className="flex items-center gap-4 w-[320px] px-6 py-5 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-3xl border-2 border-[#2ECC71]/30 shadow-lg">
+    <div className="w-12 h-12 min-w-[48px] bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center shadow-lg">
+      <Award className="w-6 h-6 text-white" />
+    </div>
 
-          <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-3xl border-2 border-[#2ECC71]/30 shadow-lg">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center shadow-lg">
-              <Clock className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p
-                className="text-base text-[#1E8449]"
-                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
-              >
-                8:45 AM – 10:30 PM
-              </p>
-              <p className="text-sm text-[#2C3E50]/70" style={{ fontFamily: 'Inter, sans-serif' }}>
-                Open all days
-              </p>
-            </div>
-          </div>
-        </motion.div>
+    <div className="flex flex-col justify-center">
+      <p
+        className="text-base text-[#1E8449]"
+        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+      >
+        Licensed & Certified
+      </p>
+      <p
+        className="text-sm text-[#2C3E50]/70"
+        style={{ fontFamily: 'Inter, sans-serif' }}
+      >
+        Approved by health authorities
+      </p>
+    </div>
+  </div>
+
+  {/* Badge 2 */}
+  <div className="flex items-center gap-4 w-[320px] px-6 py-5 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-3xl border-2 border-[#2ECC71]/30 shadow-lg">
+    <div className="w-12 h-12 min-w-[48px] bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center shadow-lg">
+      <Clock className="w-6 h-6 text-white" />
+    </div>
+
+    <div className="flex flex-col justify-center">
+      <p
+        className="text-base text-[#1E8449]"
+        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+      >
+        8:45 AM – 10:30 PM
+      </p>
+      <p
+        className="text-sm text-[#2C3E50]/70"
+        style={{ fontFamily: 'Inter, sans-serif' }}
+      >
+        Open all days
+      </p>
+    </div>
+  </div>
+</motion.div>
       </div>
     </section>
   );

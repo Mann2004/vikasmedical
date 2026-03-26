@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { CheckCircle2, MapPin, Award, Users, Clock, Phone, Star } from 'lucide-react';
-
-const storeSignImage = 'dist/assets/store-sign.png'; // Place image in public folder
+import { storeSignImage } from './storeSignImage';
 
 const highlights = [
   {

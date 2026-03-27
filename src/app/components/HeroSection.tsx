@@ -3,8 +3,7 @@ import { Phone, MessageCircle, Shield, Clock, Star, Award } from 'lucide-react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router';
 
-const heroImage = 'src/assets/heroimg.png';
-
+const heroImage = new URL('../assets/heroimg.png', import.meta.url).href;
 export function HeroSection() {
   const navigate = useNavigate();
 

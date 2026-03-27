@@ -81,6 +81,12 @@ export function AuthPage() {
     }
   };
 
+  // Format date to YYYY-MM-DD for input value
+  const formatDateForInput = (dateString: string) => {
+    if (!dateString) return '';
+    return dateString;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#EAFAF1]/30 to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
@@ -163,9 +169,22 @@ export function AuthPage() {
                 </Label>
                 <Input
                   type="date"
+                  placeholder="DD/MM/YYYY"
                   value={formData.dob}
                   onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+                  className="cursor-pointer"
+                  onKeyDown={(e) => {
+                    // Allow manual entry of numbers, slash, backspace, delete, etc.
+                    const allowedKeys = /[\d/Backspace/Delete/ArrowLeft/ArrowRight/Tab]/;
+                    if (!allowedKeys.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && 
+                        e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
+                      e.preventDefault();
+                    }
+                  }}
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  You can select from calendar or type manually (DD/MM/YYYY)
+                </p>
               </div>
 
               <Button type="submit" disabled={isLoading} className="w-full">
@@ -212,9 +231,22 @@ export function AuthPage() {
                 </Label>
                 <Input
                   type="date"
+                  placeholder="DD/MM/YYYY"
                   value={formData.dob}
                   onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+                  className="cursor-pointer"
+                  onKeyDown={(e) => {
+                    // Allow manual entry of numbers, slash, backspace, delete, etc.
+                    const allowedKeys = /[\d/Backspace/Delete/ArrowLeft/ArrowRight/Tab]/;
+                    if (!allowedKeys.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && 
+                        e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
+                      e.preventDefault();
+                    }
+                  }}
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  You can select from calendar or type manually (DD/MM/YYYY)
+                </p>
               </div>
 
               <Button type="submit" disabled={isLoading} className="w-full">

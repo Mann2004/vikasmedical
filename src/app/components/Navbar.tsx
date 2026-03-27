@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/button';
@@ -10,27 +10,53 @@ export function Navbar() {
   const location = useLocation();
 
   const scrollToSection = (id: string) => {
-    // If we're on a different page, navigate home first
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
+    setIsMenuOpen(false);
+    
+    // Function to perform the scroll
+    const performScroll = () => {
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        // Add a small delay to ensure the page is fully rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+        return true;
       }
+      return false;
+    };
+
+    // If we're on the home page, try to scroll immediately
+    if (location.pathname === '/') {
+      if (!performScroll()) {
+        // If element not found, wait a bit and try again
+        setTimeout(performScroll, 500);
+      }
+    } else {
+      // Navigate to home and then scroll after navigation completes
+      navigate('/');
+      // Wait for navigation and page render
+      setTimeout(() => {
+        performScroll();
+      }, 300);
     }
-    setIsMenuOpen(false);
   };
 
   const handleOrderNow = () => {
     navigate('/auth');
   };
+
+  // Add this effect to handle hash links when page loads
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
@@ -40,7 +66,8 @@ export function Navbar() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={() => scrollToSection('home')}
           >
             <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-2xl flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-lg md:text-xl" style={{ fontFamily: 'Poppins, sans-serif' }}>

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { CheckCircle2, MapPin, Award, Users, Clock, Phone, Star } from 'lucide-react';
 // import { storeSignImage } from './storeSignImage';
-const storeSignImage = 'src/assets/storeimg.png';
+const storeSignImage = 'src/assets/2nd.jpeg';
 
 const highlights = [
   {
@@ -59,71 +59,73 @@ export function AboutSection() {
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-12 md:mb-16">
           {/* Left Image */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative order-2 md:order-1"
-          >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <img
-                src={storeSignImage}
-                alt="Vikas Medical & Provision Store — વિકાસ મેડિકલ & પ્રોવીઝન સ્ટોર — Store Sign Board, Court Road, Umreth"
-                className="w-full h-[400px] md:h-[550px] object-cover object-center"
-              />
-              {/* Store info overlay at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1E8449]/95 to-transparent p-6">
-                <p
-                  className="text-white text-xl font-bold"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  વિકાસ મેડિકલ & પ્રોવીઝન સ્ટોર
-                </p>
-                <p className="text-white text-base font-semibold mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                  Vikas Medical & Provision Store
-                </p>
-                <p className="text-white/85 text-sm mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  Court Road, Near Old Police Station, Umreth, Gujarat
-                </p>
-                <p className="text-white/85 text-sm mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  Reg. Pharmacist: Vikas Gandhi | Ph: +91 98244 19469
-                </p>
-              </div>
-              {/* Decorative Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#2ECC71]/10 to-transparent pointer-events-none"></div>
-            </div>
+  initial={{ opacity: 0, x: -30 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="relative order-2 md:order-1"
+>
+  <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+    <img
+      src={storeSignImage}
+      alt="Vikas Medical & Provision Store — વિકાસ મેડિકલ & પ્રોવીઝન સ્ટોર — Store Sign Board, Court Road, Umreth"
+      className="w-full h-[300px] sm:h-[400px] md:h-[550px] object-cover object-center"
+    />
+    
+    {/* Store info overlay at bottom - Responsive padding */}
+    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1E8449]/95 via-[#1E8449]/80 to-transparent p-3 sm:p-4 md:p-6">
+      <p
+        className="text-white text-sm sm:text-lg md:text-xl font-bold"
+        style={{ fontFamily: 'Poppins, sans-serif' }}
+      >
+        વિકાસ મેડિકલ & પ્રોવીઝન સ્ટોર
+      </p>
+      <p className="text-white text-xs sm:text-sm md:text-base font-semibold mt-0.5 sm:mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
+        Vikas Medical & Provision Store
+      </p>
+      <p className="text-white/85 text-[10px] sm:text-xs md:text-sm mt-0.5 sm:mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+        Court Road, Near Old Police Station, Umreth, Gujarat
+      </p>
+      <p className="text-white/85 text-[10px] sm:text-xs md:text-sm mt-0.5 sm:mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+        Reg. Pharmacist: Vikas Gandhi | Ph: +91 98244 19469
+      </p>
+    </div>
+    
+    {/* Decorative Overlay */}
+    <div className="absolute inset-0 bg-gradient-to-tr from-[#2ECC71]/10 to-transparent pointer-events-none"></div>
+  </div>
 
-            {/* Trusted Since Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="absolute -bottom-6 -right-6 md:-right-8 bg-white rounded-2xl shadow-2xl p-5 border border-[#EAFAF1] text-center"
-            >
-              <div className="flex items-center gap-1 justify-center mb-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                ))}
-              </div>
-              <p
-                className="text-3xl md:text-4xl text-[#2ECC71]"
-                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800 }}
-              >
-                28+
-              </p>
-              <p
-                className="text-xs text-[#2C3E50]/70 mt-1 leading-tight"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-              >
-                Years of<br />Trusted Service
-              </p>
-            </motion.div>
+  {/* Trusted Since Badge - Repositioned for mobile */}
+  <motion.div
+    initial={{ opacity: 0, scale: 0.8 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.3, duration: 0.5 }}
+    className="absolute -bottom-4 -right-3 sm:-bottom-6 sm:-right-6 md:-right-8 bg-white rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-5 border border-[#EAFAF1] text-center"
+  >
+    <div className="flex items-center gap-0.5 sm:gap-1 justify-center mb-0.5 sm:mb-1">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-yellow-400 fill-yellow-400" />
+      ))}
+    </div>
+    <p
+      className="text-xl sm:text-2xl md:text-4xl text-[#2ECC71]"
+      style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800 }}
+    >
+      28+
+    </p>
+    <p
+      className="text-[10px] sm:text-xs text-[#2C3E50]/70 mt-0.5 sm:mt-1 leading-tight"
+      style={{ fontFamily: 'Inter, sans-serif' }}
+    >
+      Years of<br />Trusted Service
+    </p>
+  </motion.div>
 
-            {/* Decorative Elements */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 bg-[#2ECC71] rounded-full opacity-20 blur-2xl"></div>
-            <div className="absolute -bottom-8 left-1/3 w-32 h-32 bg-[#1E8449] rounded-full opacity-20 blur-3xl"></div>
-          </motion.div>
+  {/* Decorative Elements */}
+  <div className="absolute -top-4 -left-4 w-16 sm:w-24 h-16 sm:h-24 bg-[#2ECC71] rounded-full opacity-20 blur-2xl"></div>
+  <div className="absolute -bottom-8 left-1/3 w-24 sm:w-32 h-24 sm:h-32 bg-[#1E8449] rounded-full opacity-20 blur-3xl"></div>
+</motion.div>
 
           {/* Right Content */}
           <motion.div

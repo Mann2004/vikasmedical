@@ -20,38 +20,40 @@ export function HeroSection() {
 
       {/* Trusted Since 28 Years — Full-width Banner */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="w-full bg-gradient-to-r from-[#1E8449] via-[#2ECC71] to-[#1E8449] py-4 px-4"
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.7 }}
+  className="w-full bg-gradient-to-r from-[#1E8449] via-[#2ECC71] to-[#1E8449] py-3 sm:py-4 px-4"
+>
+  <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+    <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
+      <Award className="w-5 h-5 sm:w-7 sm:h-7 text-white/90 flex-shrink-0" />
+      <p
+        className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-wide text-center"
+        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, letterSpacing: '0.02em' }}
       >
-        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
-          <div className="flex items-center gap-3">
-            <Award className="w-7 h-7 text-white/90 flex-shrink-0" />
-            <p
-              className="text-2xl sm:text-3xl md:text-4xl text-white tracking-wide"
-              style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, letterSpacing: '0.02em' }}
-            >
-              Trusted Since
-              <span className="mx-2 text-yellow-300">28 Years</span>
-            </p>
-          </div>
-          <div className="hidden sm:block w-px h-8 bg-white/40"></div>
-          <div className="flex items-center gap-2">
-            <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
-            <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
-            <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
-            <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
-            <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
-            <span
-              className="text-white/90 text-sm ml-1"
-              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
-            >
-              Serving Umreth with Pride
-            </span>
-          </div>
-        </div>
-      </motion.div>
+        Trusted Since
+        <span className="mx-1 sm:mx-2 text-yellow-300">28 Years</span>
+      </p>
+    </div>
+    
+    <div className="hidden sm:block w-px h-8 bg-white/40"></div>
+    
+    <div className="flex flex-col sm:flex-row items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300 fill-yellow-300 flex-shrink-0" />
+        ))}
+      </div>
+      <span
+        className="text-white/90 text-xs sm:text-sm text-center"
+        style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
+      >
+        Serving Umreth with Pride
+      </span>
+    </div>
+  </div>
+</motion.div>
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -96,26 +98,26 @@ export function HeroSection() {
 
             {/* Owner Names */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45 }}
-              className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start mb-6"
-            >
-              <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-xl border border-[#2ECC71]/30 shadow-sm">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center text-white text-xs font-bold">VG</div>
-                <div>
-                  <p className="text-[#1E8449] text-sm font-semibold" style={{ fontFamily: 'Poppins, sans-serif' }}>Vikas Gandhi</p>
-                  <p className="text-[#2C3E50]/60 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>Registered Pharmacist</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-xl border border-[#2ECC71]/30 shadow-sm">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#1E8449] to-[#2ECC71] rounded-full flex items-center justify-center text-white text-xs font-bold">TG</div>
-                <div>
-                  <p className="text-[#1E8449] text-sm font-semibold" style={{ fontFamily: 'Poppins, sans-serif' }}>Tejas Gandhi</p>
-                  <p className="text-[#2C3E50]/60 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>Co-Owner</p>
-                </div>
-              </div>
-            </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.45 }}
+  className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start mb-6"
+>
+  <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-xl border border-[#2ECC71]/30 shadow-sm min-w-[200px]">
+    <div className="w-8 h-8 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs font-bold">VG</div>
+    <div className="flex-1 min-w-0">
+      <p className="text-[#1E8449] text-sm font-semibold truncate" style={{ fontFamily: 'Poppins, sans-serif' }}>Vikas Gandhi</p>
+      <p className="text-[#2C3E50]/60 text-xs whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>Registered Pharmacist</p>
+    </div>
+  </div>
+  <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#EAFAF1] to-[#d5f4e6] rounded-xl border border-[#2ECC71]/30 shadow-sm min-w-[200px]">
+    <div className="w-8 h-8 bg-gradient-to-br from-[#1E8449] to-[#2ECC71] rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs font-bold">TG</div>
+    <div className="flex-1 min-w-0">
+      <p className="text-[#1E8449] text-sm font-semibold truncate" style={{ fontFamily: 'Poppins, sans-serif' }}>Tejas Gandhi</p>
+      <p className="text-[#2C3E50]/60 text-xs whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>Co-Owner</p>
+    </div>
+  </div>
+</motion.div>
 
             {/* Feature Pills */}
             <motion.div

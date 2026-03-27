@@ -558,70 +558,141 @@ export function Dashboard() {
         ) : (
           <div className="space-y-4">
             {medicines.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="bg-white rounded-2xl p-12 text-center border-2 border-dashed border-[#EAFAF1]"
-              >
-                <FileText className="w-16 h-16 mx-auto mb-4 text-[#2ECC71]/50" />
-                <h3 className="text-xl text-[#2C3E50] mb-2" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}>
-                  No Medicines Added Yet
-                </h3>
-                <p className="text-[#2C3E50]/70" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  Click "Add Medicine" to start your medicine list
-                </p>
-              </motion.div>
-            ) : (
-              medicines.map((medicine, index) => (
-                <motion.div
-                  key={medicine.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="bg-white rounded-2xl p-5 md:p-6 shadow-md hover:shadow-lg transition-shadow border border-[#EAFAF1]"
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="text-center py-12"
+  >
+    <FileText className="w-16 h-16 mx-auto mb-4 text-[#2ECC71]/50" />
+    <h3 className="text-xl text-[#2C3E50] mb-2" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}>
+      No Medicines Added Yet
+    </h3>
+    <p className="text-[#2C3E50]/70" style={{ fontFamily: 'Inter, sans-serif' }}>
+      Click "Add Medicine" to start your medicine list
+    </p>
+  </motion.div>
+) : (
+  <div className="space-y-3 sm:space-y-4">
+    {medicines.map((medicine, index) => (
+      <motion.div
+        key={medicine.id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.05 }}
+        className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-[#EAFAF1] overflow-hidden"
+      >
+        {/* Mobile Layout */}
+        <div className="block sm:hidden">
+          <div className="p-3">
+            {/* Top Row: Serial Number and Action Buttons */}
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-7 h-7 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                {index + 1}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleEdit(medicine)}
+                  className="p-1.5 rounded-lg border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] transition-colors"
                 >
-                  <div className="flex justify-between items-start gap-4">
-                    {/* Serial Number */}
-                    <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center text-white text-sm font-bold shadow">
-                      {index + 1}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-lg text-[#2C3E50] mb-2" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}>
-                        {medicine.name}
-                      </h4>
-                      <div className="flex flex-wrap gap-2 text-sm">
-                        {medicine.duration && medicine.duration !== '' ? (
-                          <span className="px-3 py-1.5 bg-[#EAFAF1] text-[#1E8449] rounded-lg font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
-                            ⏱ Duration: {medicine.duration}
-                          </span>
-                        ) : (
-                          <span className="px-3 py-1.5 bg-gray-100 text-gray-600 rounded-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
-                            ⏱ Duration: As directed
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-2 flex-shrink-0">
-                      <Button
-                        onClick={() => handleEdit(medicine)}
-                        variant="outline"
-                        size="sm"
-                        className="border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1]"
-                      >
-                        <Edit2 className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        onClick={() => handleDelete(medicine.id)}
-                        variant="outline"
-                        size="sm"
-                        className="border-2 border-red-400 text-red-400 hover:bg-red-50"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))
+                  <Edit2 className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => handleDelete(medicine.id)}
+                  className="p-1.5 rounded-lg border-2 border-red-400 text-red-400 hover:bg-red-50 transition-colors"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+            
+            {/* Medicine Name */}
+            <h4 
+              className="text-[15px] font-semibold text-[#2C3E50] mb-2 leading-relaxed break-words"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
+            >
+              {medicine.name}
+            </h4>
+            
+            {/* Duration Badge */}
+            <div className="mt-2">
+              {medicine.duration && medicine.duration !== '' ? (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#EAFAF1] text-[#1E8449] rounded-lg font-medium text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span>⏱️</span>
+                  <span>{medicine.duration}</span>
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-600 rounded-lg text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span>⏱️</span>
+                  <span>Duration: As directed</span>
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        {/* Tablet & Desktop Layout */}
+        <div className="hidden sm:block">
+          <div className="p-4 md:p-5">
+            <div className="flex items-center gap-4">
+              {/* Serial Number */}
+              <div className="flex-shrink-0">
+                <div className="w-9 h-9 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
+                  {index + 1}
+                </div>
+              </div>
+              
+              {/* Medicine Info */}
+              <div className="flex-1 min-w-0">
+                <h4 
+                  className="text-base md:text-lg font-semibold text-[#2C3E50] mb-2 break-words"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
+                  {medicine.name}
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {medicine.duration && medicine.duration !== '' ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#EAFAF1] text-[#1E8449] rounded-lg font-medium text-xs md:text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      <span>⏱️</span>
+                      <span>{medicine.duration}</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-600 rounded-lg text-xs md:text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      <span>⏱️</span>
+                      <span>Duration: As directed</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="flex gap-2 flex-shrink-0">
+                <Button
+                  onClick={() => handleEdit(medicine)}
+                  variant="outline"
+                  size="sm"
+                  className="border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] h-9 px-3"
+                >
+                  <Edit2 className="w-4 h-4 mr-1" />
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => handleDelete(medicine.id)}
+                  variant="outline"
+                  size="sm"
+                  className="border-2 border-red-400 text-red-400 hover:bg-red-50 h-9 px-3"
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+
             )}
           </div>
         )}

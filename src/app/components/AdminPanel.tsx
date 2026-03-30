@@ -77,7 +77,7 @@ export function AdminPanel() {
         const userData = { id: userDoc.id, ...userDoc.data() } as User;
         
         // Load medicines for each user
-        const medicinesRef = collection(db, 'customers', userDoc.id, 'medicines');
+        const medicinesRef = collection(db, 'users', userDoc.id, 'medicines');
         const medicinesSnapshot = await getDocs(medicinesRef);
         const medicines: Medicine[] = [];
         medicinesSnapshot.forEach((medDoc) => {
@@ -204,11 +204,11 @@ export function AdminPanel() {
   const handleDeleteUser = async (userId: string) => {
     try {
       // First delete all medicines of the user
-      const medicinesRef = collection(db, 'customers', userId, 'medicines');
+      const medicinesRef = collection(db, 'users', userId, 'medicines');
       const medicinesSnapshot = await getDocs(medicinesRef);
       
       for (const medDoc of medicinesSnapshot.docs) {
-        await deleteDoc(doc(db, 'customers', userId, 'medicines', medDoc.id));
+        await deleteDoc(doc(db, 'users', userId, 'medicines', medDoc.id));
       }
       
       // Then delete the user
@@ -229,7 +229,7 @@ export function AdminPanel() {
     setMedicinesLoading(true);
     
     try {
-      const medicinesRef = collection(db, 'customers', user.id, 'medicines');
+      const medicinesRef = collection(db, 'users', user.id, 'medicines');
       const medicinesSnapshot = await getDocs(medicinesRef);
       const medicines: Medicine[] = [];
       medicinesSnapshot.forEach((doc) => {

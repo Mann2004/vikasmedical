@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/button';
 import { useNavigate, useLocation } from 'react-router';
@@ -43,6 +43,10 @@ export function Navbar() {
 
   const handleOrderNow = () => {
     navigate('/auth');
+  };
+
+  const handleAdminLogin = () => {
+    navigate('/admin-login');
   };
 
   // Add this effect to handle hash links when page loads
@@ -122,6 +126,15 @@ export function Navbar() {
               <Phone className="w-4 h-4 mr-2" />
               Order Now
             </Button>
+            <Button
+              onClick={handleAdminLogin}
+              variant="outline"
+              className="border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] px-6 py-2 rounded-full"
+              style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+            >
+              <Shield className="w-4 h-4 mr-2" />
+              Admin
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -179,6 +192,15 @@ export function Navbar() {
               >
                 <Phone className="w-4 h-4 mr-2" />
                 Order Now
+              </Button>
+              <Button
+                onClick={handleAdminLogin}
+                variant="outline"
+                className="w-full border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] py-3 rounded-full"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+              >
+                <Shield className="w-4 h-4 mr-2" />
+                Admin Login
               </Button>
             </div>
           </motion.div>

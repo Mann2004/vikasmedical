@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router';
-import { Plus, Edit2, Trash2, Download, Send, LogOut, Pill, FileText, Loader2, RefreshCw, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Edit2, Trash2, Download, Send, LogOut, Pill, FileText, Loader2, RefreshCw, ChevronDown, ChevronUp, StickyNote } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -26,6 +26,7 @@ interface Medicine {
   id: string;
   name: string;
   duration: string;
+  notes?: string;
   createdAt?: number;
 }
 
@@ -41,6 +42,7 @@ export function Dashboard() {
   const [formData, setFormData] = useState({
     name: '',
     duration: '',
+    notes: '',
   });
 
   const db = getFirestore(app);
@@ -93,6 +95,7 @@ export function Dashboard() {
       const newMedicine = {
         name: formData.name.trim(),
         duration: formData.duration.trim() || '',
+        notes: formData.notes.trim() || '',
         createdAt: Date.now(),
       };
       
@@ -125,6 +128,7 @@ export function Dashboard() {
       const updatedMedicine = {
         name: formData.name.trim(),
         duration: formData.duration.trim() || '',
+        notes: formData.notes.trim() || '',
         updatedAt: Date.now(),
       };
       
@@ -165,14 +169,15 @@ export function Dashboard() {
   const handleEdit = (medicine: Medicine) => {
     setFormData({
       name: medicine.name,
-      duration: medicine.duration,
+      duration: medicine.duration || '',
+      notes: medicine.notes || '',
     });
     setEditingId(medicine.id);
     setIsAdding(true);
   };
 
   const resetForm = () => {
-    setFormData({ name: '', duration: '' });
+    setFormData({ name: '', duration: '', notes: '' });
     setIsAdding(false);
     setEditingId(null);
   };
@@ -293,15 +298,16 @@ export function Dashboard() {
     doc.setLineWidth(0.4);
     doc.line(14, 70, W - 5, 70);
 
-    // ── Medicine Table (Updated to show only Name and Duration) ──
+    // ── Medicine Table (Updated to show Name, Duration, and Notes) ──
     const tableData = medicines.map((med, idx) => [
       `${idx + 1}.`,
       med.name,
       med.duration && med.duration !== '' ? med.duration : 'As directed',
+      med.notes && med.notes !== '' ? med.notes : '—',
     ]);
 
     autoTable(doc, {
-      head: [['#', 'Medicine Name', 'Duration']],
+      head: [['#', 'Medicine Name', 'Duration', 'Notes']],
       body: tableData,
       startY: 73,
       margin: { left: 14, right: 5 },
@@ -318,11 +324,12 @@ export function Dashboard() {
       },
       columnStyles: {
         0: { cellWidth: 8, halign: 'center', textColor: [150, 150, 150] },
-        1: { cellWidth: 85, fontStyle: 'bold', textColor: [30, 50, 80] },
-        2: { cellWidth: 65, halign: 'center' },
+        1: { cellWidth: 70, fontStyle: 'bold', textColor: [30, 50, 80] },
+        2: { cellWidth: 40, halign: 'center' },
+        3: { cellWidth: 55, textColor: [100, 100, 100] },
       },
       bodyStyles: {
-        fontSize: 9,
+        fontSize: 8.5,
         textColor: [44, 62, 80],
         cellPadding: { top: 4, bottom: 4, left: 3, right: 3 },
         lineColor: [220, 245, 230],
@@ -380,7 +387,7 @@ export function Dashboard() {
     const doc = generatePrescriptionPDF();
     if (doc) {
       doc.save(`prescription-${user?.name}.pdf`);
-      const message = ` *Vikas Medical & Provision Store*\n\nHello, I'm *${user?.name}* (${user?.mobile}). I'm sharing my medicine list.\n*Medicines (${medicines.length}):*\n${medicines.map((m, i) => `${i + 1}. ${m.name} — ${m.duration || 'As directed'}`).join('\n')}`;
+      const message = ` *Vikas Medical & Provision Store*\n\nHello, I'm *${user?.name}* (${user?.mobile}). I'm sharing my medicine list.\n*Medicines (${medicines.length}):*\n${medicines.map((m, i) => `${i + 1}. ${m.name} — ${m.duration || 'As directed'}${m.notes ? `\n   📝 Notes: ${m.notes}` : ''}`).join('\n')}`;
       const whatsappUrl = `https://wa.me/919824419469?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
       toast.info('PDF saved. Please attach it to WhatsApp.');
@@ -478,51 +485,51 @@ export function Dashboard() {
 
         {/* Action Buttons - 3 buttons in one line for mobile */}
         <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.1 }}
-  className="grid grid-cols-3 gap-1 sm:gap-2 mb-8"
->
-  <Button
-    onClick={() => setIsAdding(!isAdding)}
-    className="bg-gradient-to-r from-[#2ECC71] to-[#1E8449] hover:from-[#27ae60] hover:to-[#196f3d] text-white shadow-lg px-1 sm:px-2 md:px-4 h-auto py-2 sm:py-2.5"
-    style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
-  >
-    <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-0.5 sm:mr-1 md:mr-2 flex-shrink-0" />
-    <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap">
-      Add
-    </span>
-  </Button>
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-3 gap-1 sm:gap-2 mb-8"
+        >
+          <Button
+            onClick={() => setIsAdding(!isAdding)}
+            className="bg-gradient-to-r from-[#2ECC71] to-[#1E8449] hover:from-[#27ae60] hover:to-[#196f3d] text-white shadow-lg px-1 sm:px-2 md:px-4 h-auto py-2 sm:py-2.5"
+            style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+          >
+            <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-0.5 sm:mr-1 md:mr-2 flex-shrink-0" />
+            <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap">
+              Add
+            </span>
+          </Button>
 
-  {medicines.length > 0 && (
-    <>
-      <Button
-        onClick={handleDownloadPDF}
-        variant="outline"
-        className="border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] px-1 sm:px-2 md:px-4 h-auto py-2 sm:py-2.5"
-        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
-      >
-        <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-0.5 sm:mr-1 md:mr-2 flex-shrink-0" />
-        <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap">
-          PDF
-        </span>
-      </Button>
-      <Button
-        onClick={handleSendToAdmin}
-        variant="outline"
-        className="border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] px-1 sm:px-2 md:px-4 h-auto py-2 sm:py-2.5"
-        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
-      >
-        <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-0.5 sm:mr-1 md:mr-2 flex-shrink-0" />
-        <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap">
-          Send
-        </span>
-      </Button>
-    </>
-  )}
-</motion.div>
+          {medicines.length > 0 && (
+            <>
+              <Button
+                onClick={handleDownloadPDF}
+                variant="outline"
+                className="border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] px-1 sm:px-2 md:px-4 h-auto py-2 sm:py-2.5"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+              >
+                <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-0.5 sm:mr-1 md:mr-2 flex-shrink-0" />
+                <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap">
+                  PDF
+                </span>
+              </Button>
+              <Button
+                onClick={handleSendToAdmin}
+                variant="outline"
+                className="border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] px-1 sm:px-2 md:px-4 h-auto py-2 sm:py-2.5"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+              >
+                <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-0.5 sm:mr-1 md:mr-2 flex-shrink-0" />
+                <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap">
+                  Send
+                </span>
+              </Button>
+            </>
+          )}
+        </motion.div>
 
-        {/* Add/Edit Form - Only Name and Duration (both optional) */}
+        {/* Add/Edit Form - With Notes Field */}
         {isAdding && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -535,7 +542,7 @@ export function Dashboard() {
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="name">Medicine Name</Label>
+                <Label htmlFor="name">Medicine Name *</Label>
                 <Input
                   id="name"
                   placeholder="e.g., Paracetamol"
@@ -543,7 +550,7 @@ export function Dashboard() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="mt-2"
                 />
-                <p className="text-xs text-gray-500 mt-1">Optional but recommended</p>
+                <p className="text-xs text-gray-500 mt-1">Required</p>
               </div>
               <div>
                 <Label htmlFor="duration">Duration</Label>
@@ -556,6 +563,21 @@ export function Dashboard() {
                 />
                 <p className="text-xs text-gray-500 mt-1">Optional</p>
               </div>
+            </div>
+            <div className="mt-6">
+              <Label htmlFor="notes" className="flex items-center gap-2">
+                <StickyNote className="w-4 h-4 text-[#2ECC71]" />
+                Notes
+              </Label>
+              <textarea
+                id="notes"
+                placeholder="Add any additional notes (e.g., take after food, with water, etc.)"
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2ECC71] focus:border-transparent resize-y"
+                rows={3}
+              />
+              <p className="text-xs text-gray-500 mt-1">Optional - Add special instructions or notes</p>
             </div>
             <div className="flex gap-4 mt-6">
               <Button
@@ -607,6 +629,7 @@ export function Dashboard() {
                           <th className="px-4 py-3 text-left text-sm font-semibold text-[#2C3E50]" style={{ fontFamily: 'Poppins, sans-serif' }}>#</th>
                           <th className="px-4 py-3 text-left text-sm font-semibold text-[#2C3E50]" style={{ fontFamily: 'Poppins, sans-serif' }}>Medicine Name</th>
                           <th className="px-4 py-3 text-left text-sm font-semibold text-[#2C3E50]" style={{ fontFamily: 'Poppins, sans-serif' }}>Duration</th>
+                          <th className="px-4 py-3 text-left text-sm font-semibold text-[#2C3E50]" style={{ fontFamily: 'Poppins, sans-serif' }}>Notes</th>
                           <th className="px-4 py-3 text-left text-sm font-semibold text-[#2C3E50]" style={{ fontFamily: 'Poppins, sans-serif' }}>Actions</th>
                         </tr>
                       </thead>
@@ -634,6 +657,18 @@ export function Dashboard() {
                                 <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs">
                                   ⏱️ As directed
                                 </span>
+                              )}
+                            </td>
+                            <td className="px-4 py-3">
+                              {medicine.notes && medicine.notes !== '' ? (
+                                <div className="max-w-xs">
+                                  <span className="inline-flex items-start gap-1.5 px-2 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs">
+                                    <StickyNote className="w-3 h-3 mt-0.5" />
+                                    <span className="line-clamp-2">{medicine.notes}</span>
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-gray-400 text-xs">—</span>
                               )}
                             </td>
                             <td className="px-4 py-3">
@@ -671,15 +706,23 @@ export function Dashboard() {
                         className="bg-white rounded-xl shadow-md border border-[#EAFAF1] p-4"
                       >
                         <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center text-white text-sm font-bold">
+                          <div className="flex items-center gap-3 flex-1">
+                            <div className="w-8 h-8 bg-gradient-to-br from-[#2ECC71] to-[#1E8449] rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                               {index + 1}
                             </div>
-                            <h4 className="font-semibold text-[#2C3E50]" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                              {medicine.name}
-                            </h4>
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-[#2C3E50]" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                                {medicine.name}
+                              </h4>
+                              {medicine.notes && medicine.notes !== '' && (
+                                <div className="mt-1 flex items-start gap-1">
+                                  <StickyNote className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                                  <p className="text-xs text-blue-700 line-clamp-2">{medicine.notes}</p>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 ml-2">
                             <button
                               onClick={() => handleEdit(medicine)}
                               className="p-2 rounded-lg border-2 border-[#2ECC71] text-[#2ECC71] hover:bg-[#EAFAF1] transition-colors"

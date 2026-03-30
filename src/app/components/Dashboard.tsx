@@ -61,7 +61,8 @@ export function Dashboard() {
   const loadMedicines = async (userId: string) => {
     setIsLoading(true);
     try {
-      const medicinesRef = collection(db, 'customers', userId, 'medicines');
+      // Changed from 'customers' to 'users'
+      const medicinesRef = collection(db, 'users', userId, 'medicines');
       const q = query(medicinesRef, orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
       
@@ -91,7 +92,8 @@ export function Dashboard() {
     
     setIsSaving(true);
     try {
-      const medicinesRef = collection(db, 'customers', user.id, 'medicines');
+      // Changed from 'customers' to 'users'
+      const medicinesRef = collection(db, 'users', user.id, 'medicines');
       const newMedicine = {
         name: formData.name.trim(),
         duration: formData.duration.trim() || '',
@@ -124,7 +126,8 @@ export function Dashboard() {
     
     setIsSaving(true);
     try {
-      const medicineRef = doc(db, 'customers', user.id, 'medicines', editingId!);
+      // Changed from 'customers' to 'users'
+      const medicineRef = doc(db, 'users', user.id, 'medicines', editingId!);
       const updatedMedicine = {
         name: formData.name.trim(),
         duration: formData.duration.trim() || '',
@@ -153,7 +156,8 @@ export function Dashboard() {
     if (!confirm('Delete this medicine?')) return;
     
     try {
-      const medicineRef = doc(db, 'customers', user.id, 'medicines', id);
+      // Changed from 'customers' to 'users'
+      const medicineRef = doc(db, 'users', user.id, 'medicines', id);
       await deleteDoc(medicineRef);
       
       const updatedMedicines = medicines.filter((m) => m.id !== id);
